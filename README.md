@@ -29,3 +29,5 @@ This project is an interactive 3D viewer that displays `.ply` files using **Thre
 - run app : `npm run start`
 
 ## Live Preview
+
+[live preview](https://3-d-poi-ridho-satriawans-projects.vercel.app/)
