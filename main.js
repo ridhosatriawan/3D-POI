@@ -21,6 +21,7 @@ const pois = [
 ];
 
 const container = document.getElementById("poi-container");
+const loadingElement = document.getElementById("loading");
 const statsBox = document.getElementById("camera-stats");
 const toggleBtn = document.getElementById("poi-toggle");
 const infoBox = document.getElementById("poi-info");
@@ -37,6 +38,7 @@ function init() {
   camera.position.set(4, 2, 1);
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
+  //   renderer.setPixelRatio(window.devicePixelRatio * 0.5);
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -62,10 +64,15 @@ function loadModel() {
         vertexColors: geometry.hasAttribute("color"),
       });
       const points = new THREE.Points(geometry, material);
+      loadingElement.style.display = "none";
       scene.add(points);
     },
-    undefined,
+    (xhr) => {
+      const percent = (xhr.loaded / xhr.total) * 100;
+      loadingElement.textContent = `Loading model: ${percent.toFixed(1)}%`;
+    },
     (error) => {
+      loadingElement.textContent = "Failed to load model.";
       console.error("Error loading PLY:", error);
     }
   );
